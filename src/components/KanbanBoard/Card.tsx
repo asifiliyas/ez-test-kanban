@@ -34,6 +34,19 @@ export const Card: React.FC<CardProps> = ({ card }) => {
     const [modalType, setModalType] = useState<'edit' | 'delete' | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const [isMobile, setIsMobile] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return window.innerWidth <= 768;
+        }
+        return false;
+    });
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const {
         attributes,
         listeners,
@@ -138,16 +151,20 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                 style={style}
                 className={`kanban-card ${isEditing ? 'editing' : ''}`}
                 onClick={handleCardClick}
+                {...(!isMobile ? attributes : {})}
+                {...(!isMobile ? listeners : {})}
             >
-                {/* Drag handle - ONLY this area triggers drag */}
-                <div
-                    className="drag-handle"
-                    {...attributes}
-                    {...listeners}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <GripVertical size={16} />
-                </div>
+                {/* Drag handle visible only on mobile */}
+                {isMobile && (
+                    <div
+                        className="drag-handle"
+                        {...attributes}
+                        {...listeners}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <GripVertical size={16} />
+                    </div>
+                )}
 
                 <div className={`card-indicator ${card.columnId}`} />
                 <div className="card-content">
