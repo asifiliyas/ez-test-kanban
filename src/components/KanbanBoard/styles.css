@@ -1,0 +1,337 @@
+:root {
+  --todo-color: #007bff;
+  --progress-color: #ff9800;
+  --done-color: #00c388;
+  --bg-color: #f4f7f9;
+  --column-bg: #ebedef;
+  --card-bg: #ffffff;
+  --text-main: #333333;
+  --text-muted: #666666;
+  --border-radius-column: 10px;
+  --border-radius-card: 6px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.01), 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+}
+
+.kanban-board {
+  display: flex;
+  gap: 24px;
+  padding: 40px;
+  overflow-x: auto;
+  align-items: flex-start;
+}
+
+.kanban-column {
+  flex: 1;
+  min-width: 320px;
+  background-color: var(--column-bg);
+  border-radius: var(--border-radius-column);
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 16px 0;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px;
+  border-radius: var(--border-radius-column) var(--border-radius-column) 0 0;
+  color: white;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.column-header.todo {
+  background-color: var(--todo-color);
+}
+
+.column-header.in-progress {
+  background-color: var(--progress-color);
+}
+
+.column-header.done {
+  background-color: var(--done-color);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+/* Badge colors - more saturated backgrounds, darker text */
+.badge.todo {
+  background-color: #bbdefb;
+  color: #0d47a1;
+}
+
+.badge.in-progress {
+  background-color: #ffe0b2;
+  color: #e65100;
+}
+
+.badge.done {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+}
+
+.add-column-btn {
+  background: white;
+  color: black;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.add-card-wrapper {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.add-card-btn {
+  width: 120px;
+  /* Reduced width */
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius-card);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* Left aligned items */
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  /* Bolder text */
+  font-size: 0.95rem;
+  /* Slightly bigger text */
+  transition: all 0.2s;
+}
+
+.add-card-btn:hover {
+  background-color: #f9f9f9;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px;
+  min-height: 100px;
+}
+
+.kanban-card {
+  background: var(--card-bg);
+  padding: 10px;
+  border-radius: var(--border-radius-card);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  cursor: grab;
+}
+
+.kanban-card:hover {
+  background-color: #f2f2f2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.kanban-card:active {
+  cursor: grabbing;
+}
+
+.kanban-card:focus-within {
+  background-color: #ffffff;
+  z-index: 10;
+}
+
+.card-indicator {
+  width: 4px;
+  height: 40px;
+  border-radius: 2px;
+}
+
+.card-indicator.todo {
+  background-color: var(--todo-color);
+}
+
+.card-indicator.in-progress {
+  background-color: var(--progress-color);
+}
+
+.card-indicator.done {
+  background-color: var(--done-color);
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-title {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-main);
+  outline: none;
+}
+
+.card-placeholder-bar {
+  width: 24px;
+  height: 6px;
+  background: #eee;
+  border-radius: 3px;
+  margin-top: 4px;
+}
+
+.delete-card-btn {
+  color: #c62828;
+  /* Dark Red */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.delete-card-btn:hover {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .kanban-board {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .kanban-column {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+/* Elegant & Sleek Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  /* Subtle dimming, no blur */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.custom-modal {
+  background: white;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 280px;
+  /* Elegant, small size */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  animation: modalSleek 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSleek {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.custom-modal p {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel {
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  color: #666;
+}
+
+.btn-cancel:hover {
+  background: #f1f3f5;
+}
+
+.btn-confirm {
+  background: #000;
+  border: none;
+  color: #fff;
+}
+
+.btn-confirm:hover {
+  background: #222;
+  transform: translateY(-1px);
+}
+
+.btn-confirm:active {
+  transform: translateY(0);
+}
+
+.kanban-card.editing {
+  border: 2px solid var(--todo-color);
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+  background: #fff !important;
+}
+
+/* Ensure toast container is at the top */
+.go2072408551 {
+  /* react-hot-toast internal class if needed, or but default Toaster works */
+  z-index: 9999 !important;
+}
