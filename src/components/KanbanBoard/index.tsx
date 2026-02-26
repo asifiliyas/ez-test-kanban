@@ -42,8 +42,7 @@ export const KanbanBoard: React.FC = () => {
         }),
         useSensor(TouchSensor, {
             activationConstraint: {
-                delay: 250,
-                tolerance: 5,
+                distance: 8,
             }
         }),
         useSensor(KeyboardSensor, {

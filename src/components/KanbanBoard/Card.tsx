@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Trash2 } from 'lucide-react';
+import { Trash2, GripVertical } from 'lucide-react';
 import { Card as CardType } from '../../types/kanban';
 import { useKanbanStore } from '../../store/useKanbanStore';
 
@@ -136,11 +136,19 @@ export const Card: React.FC<CardProps> = ({ card }) => {
             <div
                 ref={setNodeRef}
                 style={style}
-                {...attributes}
-                {...listeners}
                 className={`kanban-card ${isEditing ? 'editing' : ''}`}
                 onClick={handleCardClick}
             >
+                {/* Drag handle - ONLY this area triggers drag */}
+                <div
+                    className="drag-handle"
+                    {...attributes}
+                    {...listeners}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <GripVertical size={16} />
+                </div>
+
                 <div className={`card-indicator ${card.columnId}`} />
                 <div className="card-content">
                     <input

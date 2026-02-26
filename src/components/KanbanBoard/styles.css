@@ -152,14 +152,32 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  color: #bbb;
   cursor: grab;
   touch-action: none;
   -webkit-user-select: none;
-  /* Safari / iOS */
   user-select: none;
-  /* Prevent text selection during drag */
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+  color: #888;
+}
+
+.kanban-card:hover .drag-handle {
+  color: #999;
 }
 
 .kanban-card:hover {
