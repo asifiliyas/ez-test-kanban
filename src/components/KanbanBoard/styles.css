@@ -155,6 +155,8 @@ body {
   gap: 12px;
   position: relative;
   cursor: grab;
+  touch-action: none;
+  /* Crucial for mobile drag and drop */
 }
 
 .kanban-card:hover {
