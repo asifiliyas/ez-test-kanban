@@ -147,16 +147,40 @@ body {
 
 .kanban-card {
   background: var(--card-bg);
-  padding: 10px;
+  padding: 8px 12px;
   border-radius: var(--border-radius-card);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   position: relative;
+  user-select: none;
+  /* Prevent text selection while dragging */
+  touch-action: pan-y;
+  /* Allow vertical scrolling, handle will lock it */
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
   cursor: grab;
+  padding: 4px;
+  border-radius: 4px;
   touch-action: none;
-  /* Crucial for mobile drag and drop */
+  /* Handle itself prevents scrolling for immediate drag */
+  transition: color 0.2s, background 0.2s;
+}
+
+.drag-handle:hover {
+  color: #888;
+  background: #f0f0f0;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
 }
 
 .kanban-card:hover {
